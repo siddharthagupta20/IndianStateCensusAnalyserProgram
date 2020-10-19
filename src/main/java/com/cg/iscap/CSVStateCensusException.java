@@ -2,13 +2,15 @@ package com.cg.iscap;
 
 public class CSVStateCensusException extends Exception {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	
+	public enum ExceptionType{INCORRECT_PATH,INCORRECT_TYPE}
+	
+	ExceptionType type;
 
-	public CSVStateCensusException(String message) {
+	public CSVStateCensusException(ExceptionType type,String message) {
 		super(message);
+		this.type=type;
 	}
 
 }
