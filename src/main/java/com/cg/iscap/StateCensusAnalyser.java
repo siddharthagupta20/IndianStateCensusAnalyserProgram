@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.util.Iterator;
 
@@ -16,7 +15,7 @@ public class StateCensusAnalyser {
 
 	public static final String INDIA_STATE_CENSUS_DATA = "IndiaStateCensusData.csv";
 
-	public int loadCsvFile(Path p) {
+	public int loadCsvFile(Path p) throws CSVStateCensusException {
 		try {
 			BufferedReader reader=new BufferedReader(new FileReader(p.toFile())); 
 
@@ -31,15 +30,9 @@ public class StateCensusAnalyser {
 			}
 			return count;
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
-			return 0;
+			throw new CSVStateCensusException("Invalid File");
+			
 		}
-	}
-
-	public static void main(String[] args) {
-		StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
-		Path p = Paths.get(INDIA_STATE_CENSUS_DATA);
-		System.out.println("Total States:"+stateCensusAnalyser.loadCsvFile(p));
 	}
 
 }
