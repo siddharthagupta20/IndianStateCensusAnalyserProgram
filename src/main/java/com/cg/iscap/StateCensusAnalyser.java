@@ -33,6 +33,8 @@ public class StateCensusAnalyser {
 		} catch (IOException e) {
 			throw new CSVStateCensusException(ExceptionType.INCORRECT_PATH, "Invalid File");
 
+		}catch(RuntimeException e) {
+			throw new CSVStateCensusException(ExceptionType.INVALID_CONTENT,"Invalid Content");
 		}
 	}
 

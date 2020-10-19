@@ -13,6 +13,7 @@ public class StateCensusAnalyseTest {
 	public static final String INVALID_PATH = "IndiaStateCensus.csv";
 	public static final String INVALID_TYPE = "IndiaStateCensusData.txt";
 	public static final String INVALID_DELIMITER = "IndiaStateCensusData1.csv";
+	public static final String INVALID_HEADER = "IndiaStateCode.csv";
 
 	@Test
 	public void givenStatesCensusData_whenRead_shouldReturnCount() {
@@ -52,9 +53,20 @@ public class StateCensusAnalyseTest {
 		StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
 		Path p = Paths.get(INVALID_DELIMITER);
 		try {
-			System.out.println(stateCensusAnalyser.loadCsvFile(p));
+			stateCensusAnalyser.loadCsvFile(p);
 		} catch (CSVStateCensusException e) {
-			assertEquals(CSVStateCensusException.ExceptionType.INCORRECT_DELIMITER, e.type);
+			assertEquals(CSVStateCensusException.ExceptionType.INVALID_CONTENT, e.type);
+
+		}
+	}
+	@Test
+	public void givenFileWithInvalidHeader_WhenInvalid_ShouldReturnTrue() throws CSVStateCensusException {
+		StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+		Path p = Paths.get(INVALID_HEADER);
+		try {
+			stateCensusAnalyser.loadCsvFile(p);
+		} catch (CSVStateCensusException e) {
+			assertEquals(CSVStateCensusException.ExceptionType.INVALID_CONTENT, e.type);
 
 		}
 	}
