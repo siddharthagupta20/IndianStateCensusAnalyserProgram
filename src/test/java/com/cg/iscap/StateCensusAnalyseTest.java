@@ -12,6 +12,8 @@ public class StateCensusAnalyseTest {
 	public static final String INDIA_STATE_CENSUS_DATA = "IndiaStateCensusData.csv";
 	public static final String INVALID_PATH = "IndiaStateCensus.csv";
 	public static final String INVALID_TYPE = "IndiaStateCensusData.txt";
+	public static final String INVALID_DELIMITER = "IndiaStateCensusData1.csv";
+
 	@Test
 	public void givenStatesCensusData_whenRead_shouldReturnCount() {
 		StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
@@ -33,16 +35,27 @@ public class StateCensusAnalyseTest {
 			assertEquals(CSVStateCensusException.ExceptionType.INCORRECT_PATH, e.type);
 		}
 	}
+
 	@Test
-	public void givenFileType_WhenInvalid_ShouldReturnTrue()throws CSVStateCensusException {
+	public void givenFileType_WhenInvalid_ShouldReturnTrue() throws CSVStateCensusException {
 		StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
-		Path p=Paths.get(INVALID_TYPE);
+		Path p = Paths.get(INVALID_TYPE);
 		try {
 			stateCensusAnalyser.loadCsvFile(p);
-		}
-		catch(CSVStateCensusException e) {
-			assertEquals(CSVStateCensusException.ExceptionType.INCORRECT_TYPE,e.type);
+		} catch (CSVStateCensusException e) {
+			assertEquals(CSVStateCensusException.ExceptionType.INCORRECT_TYPE, e.type);
 		}
 	}
 
+	@Test
+	public void givenFileDelimiter_WhenInvalid_ShouldReturnTrue() throws CSVStateCensusException {
+		StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+		Path p = Paths.get(INVALID_DELIMITER);
+		try {
+			System.out.println(stateCensusAnalyser.loadCsvFile(p));
+		} catch (CSVStateCensusException e) {
+			assertEquals(CSVStateCensusException.ExceptionType.INCORRECT_DELIMITER, e.type);
+
+		}
+	}
 }
