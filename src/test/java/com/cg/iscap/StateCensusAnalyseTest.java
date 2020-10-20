@@ -55,7 +55,7 @@ public class StateCensusAnalyseTest {
 		try {
 			stateCensusAnalyser.loadCsvFile(p);
 		} catch (CSVStateCensusException e) {
-			assertEquals(CSVStateCensusException.ExceptionType.INVALID_CONTENT, e.type);
+			assertEquals(CSVStateCensusException.ExceptionType.INCORRECT_DELIMITER, e.type);
 
 		}
 	}
@@ -66,7 +66,7 @@ public class StateCensusAnalyseTest {
 		try {
 			stateCensusAnalyser.loadCsvFile(p);
 		} catch (CSVStateCensusException e) {
-			assertEquals(CSVStateCensusException.ExceptionType.INVALID_CONTENT, e.type);
+			assertEquals(CSVStateCensusException.ExceptionType.INCORRECT_HEADER, e.type);
 
 		}
 	}
