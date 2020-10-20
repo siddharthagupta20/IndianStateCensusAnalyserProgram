@@ -19,24 +19,35 @@ public class StateCensusAnalyser {
 	}
 
 	public int loadCsvFile(Path p) throws CSVStateCensusException {
-		
-		if(!p.toString().contains(".csv"))
-			throw new CSVStateCensusException(ExceptionType.INCORRECT_TYPE,"INVALID TYPE");
+
+		if (!p.toString().contains(".csv"))
+			throw new CSVStateCensusException(ExceptionType.INCORRECT_TYPE, "INVALID TYPE");
 		try {
+
 			BufferedReader reader = new BufferedReader(new FileReader(p.toFile()));
-
-			CsvToBean<CSVStateCensus> csvToBean = new CsvToBeanBuilder<CSVStateCensus>(reader)
+			String empty="";
+			String[] header=reader.readLine().split(",");
+			
+			while ((empty = reader.readLine()) != null) {
+				if(!(("STATE").equalsIgnoreCase(header[0])&&("POPULATION").equalsIgnoreCase(header[1])&&("AREAINSQKM").equalsIgnoreCase(header[2])&&("DensityperSQKM").equalsIgnoreCase(header[3])))
+					throw new CSVStateCensusException(ExceptionType.INCORRECT_HEADER, "INVALID HEADER");
+				if (!empty.contains(","))
+					throw new CSVStateCensusException(ExceptionType.INCORRECT_DELIMITER, "INVALID DELIMITER");
+			}
+			reader.close();
+			BufferedReader reader1 = new BufferedReader(new FileReader(p.toFile()));
+			CsvToBean<CSVStateCensus> csvToBean = new CsvToBeanBuilder<CSVStateCensus>(reader1)
 					.withType(CSVStateCensus.class).withIgnoreLeadingWhiteSpace(true).build();
-
+			
 			Iterator<CSVStateCensus> iterator = csvToBean.iterator();
 			Iterable<CSVStateCensus> csvIterable=()->iterator;
 			int count=(int)StreamSupport.stream(csvIterable.spliterator(), false).count();
+
+			reader1.close();
 			return count;
 		} catch (IOException e) {
 			throw new CSVStateCensusException(ExceptionType.INCORRECT_PATH, "Invalid File");
 
-		}catch(RuntimeException e) {
-			throw new CSVStateCensusException(ExceptionType.INVALID_CONTENT,"Invalid Content");
 		}
 	}
 public int loadStateCodeCsvFile(Path p) throws CSVStateCensusException {
@@ -45,19 +56,29 @@ public int loadStateCodeCsvFile(Path p) throws CSVStateCensusException {
 			throw new CSVStateCensusException(ExceptionType.INCORRECT_TYPE,"INVALID TYPE");
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(p.toFile()));
-
-			CsvToBean<CSVStateCensus> csvToBean = new CsvToBeanBuilder<CSVStateCensus>(reader)
+			String empty="";
+			String[] header=reader.readLine().split(",");
+			
+			while ((empty = reader.readLine()) != null) {
+				if(!(("STATE").equalsIgnoreCase(header[0])&&("POPULATION").equalsIgnoreCase(header[1])&&("AREAINSQKM").equalsIgnoreCase(header[2])&&("DensityperSQKM").equalsIgnoreCase(header[3])))
+					throw new CSVStateCensusException(ExceptionType.INCORRECT_HEADER, "INVALID HEADER");
+				if (!empty.contains(","))
+					throw new CSVStateCensusException(ExceptionType.INCORRECT_DELIMITER, "INVALID DELIMITER");
+			}
+			reader.close();
+			BufferedReader reader1 = new BufferedReader(new FileReader(p.toFile()));
+			CsvToBean<CSVStateCensus> csvToBean = new CsvToBeanBuilder<CSVStateCensus>(reader1)
 					.withType(CSVStateCensus.class).withIgnoreLeadingWhiteSpace(true).build();
 
 			Iterator<CSVStateCensus> iterator = csvToBean.iterator();
 			Iterable<CSVStateCensus> csvIterable=()->iterator;
 			int count=(int)StreamSupport.stream(csvIterable.spliterator(), false).count();
+			reader1.close();
 			return count;
+			
 		} catch (IOException e) {
 			throw new CSVStateCensusException(ExceptionType.INCORRECT_PATH, "Invalid File");
 
-		}catch(RuntimeException e) {
-			throw new CSVStateCensusException(ExceptionType.INVALID_CONTENT,"Invalid Content");
 		}
 	}
 
