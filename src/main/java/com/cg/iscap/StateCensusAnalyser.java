@@ -34,16 +34,16 @@ public class StateCensusAnalyser {
 				if (!empty.contains(","))
 					throw new CSVStateCensusException(ExceptionType.INCORRECT_DELIMITER, "INVALID DELIMITER");
 			}
-			reader.close();
-			BufferedReader reader1 = new BufferedReader(new FileReader(p.toFile()));
-			CsvToBean<CSVStateCensus> csvToBean = new CsvToBeanBuilder<CSVStateCensus>(reader1)
-					.withType(CSVStateCensus.class).withIgnoreLeadingWhiteSpace(true).build();
 			
-			Iterator<CSVStateCensus> iterator = csvToBean.iterator();
+			reader = new BufferedReader(new FileReader(p.toFile()));
+			
+			OpenCSVBuilder<CSVStateCensus> builderObj=new OpenCSVBuilder<CSVStateCensus>();
+			Iterator<CSVStateCensus> iterator=builderObj.getCsvFileIterator(reader, CSVStateCensus.class);
+			
 			Iterable<CSVStateCensus> csvIterable=()->iterator;
 			int count=(int)StreamSupport.stream(csvIterable.spliterator(), false).count();
 
-			reader1.close();
+			reader.close();
 			return count;
 		} catch (IOException e) {
 			throw new CSVStateCensusException(ExceptionType.INCORRECT_PATH, "Invalid File");
@@ -65,15 +65,14 @@ public int loadStateCodeCsvFile(Path p) throws CSVStateCensusException {
 				if (!empty.contains(","))
 					throw new CSVStateCensusException(ExceptionType.INCORRECT_DELIMITER, "INVALID DELIMITER");
 			}
-			reader.close();
-			BufferedReader reader1 = new BufferedReader(new FileReader(p.toFile()));
-			CsvToBean<CSVStateCensus> csvToBean = new CsvToBeanBuilder<CSVStateCensus>(reader1)
-					.withType(CSVStateCensus.class).withIgnoreLeadingWhiteSpace(true).build();
-
-			Iterator<CSVStateCensus> iterator = csvToBean.iterator();
-			Iterable<CSVStateCensus> csvIterable=()->iterator;
+			reader = new BufferedReader(new FileReader(p.toFile()));
+			
+			OpenCSVBuilder<CSVStates> builderObj=new OpenCSVBuilder<CSVStates>();
+			Iterator<CSVStates> iterator=builderObj.getCsvFileIterator(reader, CSVStateCensus.class);
+			
+			Iterable<CSVStates> csvIterable=()->iterator;
 			int count=(int)StreamSupport.stream(csvIterable.spliterator(), false).count();
-			reader1.close();
+			reader.close();
 			return count;
 			
 		} catch (IOException e) {
