@@ -16,7 +16,7 @@ public class StateCodesTest {
 	public static final String INVALID_HEADER = "IndiaStateCensusData.csv";
 
 	@Test
-	public void givenStatesCensusData_whenRead_shouldReturnCount() {
+	public void givenStatesCensusData_whenRead_shouldReturnCount() throws CSVBeanBuilderException {
 		StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
 		Path p = Paths.get(INDIA_STATE_CODE_DATA);
 		try {
@@ -27,7 +27,7 @@ public class StateCodesTest {
 	}
 
 	@Test
-	public void givenFilePath_WhenInvalid_ShouldReturnTrue() throws CSVStateCensusException {
+	public void givenFilePath_WhenInvalid_ShouldReturnTrue() throws CSVStateCensusException, CSVBeanBuilderException {
 		StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
 		Path p = Paths.get(INVALID_PATH);
 		try {
@@ -38,7 +38,7 @@ public class StateCodesTest {
 	}
 
 	@Test
-	public void givenFileType_WhenInvalid_ShouldReturnTrue() throws CSVStateCensusException {
+	public void givenFileType_WhenInvalid_ShouldReturnTrue() throws CSVStateCensusException, CSVBeanBuilderException {
 		StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
 		Path p = Paths.get(INVALID_TYPE);
 		try {
@@ -49,7 +49,7 @@ public class StateCodesTest {
 	}
 
 	@Test
-	public void givenFileDelimiter_WhenInvalid_ShouldReturnTrue() throws CSVStateCensusException {
+	public void givenFileDelimiter_WhenInvalid_ShouldReturnTrue() throws CSVStateCensusException, CSVBeanBuilderException {
 		StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
 		Path p = Paths.get(INVALID_DELIMITER);
 		try {
@@ -60,7 +60,7 @@ public class StateCodesTest {
 		}
 	}
 	@Test
-	public void givenFileWithInvalidHeader_WhenInvalid_ShouldReturnTrue() throws CSVStateCensusException {
+	public void givenFileWithInvalidHeader_WhenInvalid_ShouldReturnTrue() throws CSVStateCensusException, CSVBeanBuilderException {
 		StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
 		Path p = Paths.get(INVALID_HEADER);
 		try {
