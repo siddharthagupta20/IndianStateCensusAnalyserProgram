@@ -9,8 +9,7 @@ import java.util.Iterator;
 import java.util.stream.StreamSupport;
 
 import com.cg.iscap.CSVStateCensusException.ExceptionType;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
+
 
 public class StateCensusAnalyser {
 
@@ -18,6 +17,7 @@ public class StateCensusAnalyser {
 		STATE_CENSUS, STATE_CODE
 	}
 
+	@SuppressWarnings({ "resource", "unchecked" })
 	public int loadCsvFile(Path p) throws CSVStateCensusException {
 
 		if (!p.toString().contains(".csv"))
@@ -37,8 +37,7 @@ public class StateCensusAnalyser {
 			
 			reader = new BufferedReader(new FileReader(p.toFile()));
 			
-			OpenCSVBuilder<CSVStateCensus> builderObj=new OpenCSVBuilder<CSVStateCensus>();
-			Iterator<CSVStateCensus> iterator=builderObj.getCsvFileIterator(reader, CSVStateCensus.class);
+			Iterator<CSVStateCensus> iterator = ((OpenCSVBuilder<CSVStateCensus>)CSVBuilderFactory.createCSVBuilder()).getCsvFileIterator(reader, CSVStateCensus.class);
 			
 			Iterable<CSVStateCensus> csvIterable=()->iterator;
 			int count=(int)StreamSupport.stream(csvIterable.spliterator(), false).count();
@@ -50,6 +49,7 @@ public class StateCensusAnalyser {
 
 		}
 	}
+@SuppressWarnings({ "resource", "unchecked" })
 public int loadStateCodeCsvFile(Path p) throws CSVStateCensusException {
 		
 		if(!p.toString().contains(".csv"))
@@ -67,8 +67,7 @@ public int loadStateCodeCsvFile(Path p) throws CSVStateCensusException {
 			}
 			reader = new BufferedReader(new FileReader(p.toFile()));
 			
-			OpenCSVBuilder<CSVStates> builderObj=new OpenCSVBuilder<CSVStates>();
-			Iterator<CSVStates> iterator=builderObj.getCsvFileIterator(reader, CSVStateCensus.class);
+			Iterator<CSVStates> iterator =  ((OpenCSVBuilder<CSVStates>)CSVBuilderFactory.createCSVBuilder()).getCsvFileIterator(reader, CSVStates.class);
 			
 			Iterable<CSVStates> csvIterable=()->iterator;
 			int count=(int)StreamSupport.stream(csvIterable.spliterator(), false).count();
