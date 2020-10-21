@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
-
 import java.util.Iterator;
 import java.util.stream.StreamSupport;
 
@@ -60,8 +59,9 @@ public int loadStateCodeCsvFile(Path p) throws CSVStateCensusException {
 			String[] header=reader.readLine().split(",");
 			
 			while ((empty = reader.readLine()) != null) {
-				if(!(("STATE").equalsIgnoreCase(header[0])&&("POPULATION").equalsIgnoreCase(header[1])&&("AREAINSQKM").equalsIgnoreCase(header[2])&&("DensityperSQKM").equalsIgnoreCase(header[3])))
+				if(!(("SRNO").equalsIgnoreCase(header[0])&&("STATE NAME").equalsIgnoreCase(header[1])&&("TIN").equalsIgnoreCase(header[2])&&("STATECODE").equalsIgnoreCase(header[3]))) {
 					throw new CSVStateCensusException(ExceptionType.INCORRECT_HEADER, "INVALID HEADER");
+					}
 				if (!empty.contains(","))
 					throw new CSVStateCensusException(ExceptionType.INCORRECT_DELIMITER, "INVALID DELIMITER");
 			}
